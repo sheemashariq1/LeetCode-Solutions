@@ -1,17 +1,14 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-       string cleaned = "";
-
+       string clr = "";
         for (char ch : s) {
             if (isalnum(ch)) {
-                cleaned += tolower(ch);
+                clr += tolower(ch);
             }
         }
-
-        string rev = cleaned;
+        string rev = clr;
         reverse(rev.begin(), rev.end());
-
-        return cleaned == rev;
+        return clr == rev;
     }
 };
