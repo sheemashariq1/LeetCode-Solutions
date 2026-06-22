@@ -13,7 +13,7 @@ This repo is automatically updated using **LeetHub v2** — every successful sub
 - Problem statement 
 - My solution code
 - Difficulty tag
-- 
+  
 ## 🛠️ Languages Used
 - C++
 - Python
@@ -22,6 +22,3 @@ This repo is automatically updated using **LeetHub v2** — every successful sub
 - [LinkedIn](https://www.linkedin.com/in/sheema-shariq-436678366)
 - [LeetCode Profile](https://leetcode.com/u/SHEEMA_SHARIQ)
 - [GeeksforGeeks](https://www.geeksforgeeks.org/profile/sheemash17x8)
-
-## 📈 Progress
-![LeetCode Stats](https://leetcode-stats-card.vercel.app/api?username=SHEEMA_SHARIQ)
