@@ -1,7 +1,7 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        std::string result = "";
+        string result = "";
         string word = "";
         for (int i = s.length() - 1; i >= 0; i--) {
             if (s[i] != ' ') {
