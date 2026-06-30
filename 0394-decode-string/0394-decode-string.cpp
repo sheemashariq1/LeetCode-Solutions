@@ -4,18 +4,21 @@ public:
     string res="";
     while(i<s.length() && s[i]!=']'){
         if(!isdigit(s[i])){
-            res+=s[i++];
+            res+=s[i];
+            i++;
         }
         else{
             int k=0;
             while(i<s.length() && isdigit(s[i])){
-                k=k*10+(s[i++]-'0');
+                k=k*10+(s[i]-'0');
+                i++;
             }
             i++;
             string nested=decode(s,i);
             i++;
-            while(k-->0){
+            while(k>0){
               res+=nested;
+              k--;
             }
         }
     }
