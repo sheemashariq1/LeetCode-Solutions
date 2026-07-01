@@ -1,37 +1,27 @@
 class Solution {
 public:
-vector<int> temp;
- void merge(vector<int>& nums, int left, int mid, int right) {
-        int i = left;   
-        int j = mid + 1;   
-        int k = left;     
-        while (i <= mid && j <= right) {
-            if (nums[i] <= nums[j]) {
-                temp[k++] = nums[i++];
-            } else {
-                temp[k++] = nums[j++];
-            }
-        }
-        while (i <= mid) {
-            temp[k++] = nums[i++];
-        }
-        while (j <= right) {
-            temp[k++] = nums[j++];
-        }
-        for (int index = left; index <= right; index++) {
-            nums[index] = temp[index];
-        }
-    }
-    void mergeSort(vector<int>& nums, int left, int right) {
-        if (left >= right) return;
-        int mid = left + (right - left) / 2;
-        mergeSort(nums, left, mid);
-        mergeSort(nums, mid + 1, right);
-        merge(nums, left, mid, right);
-    }
-     vector<int> sortArray(vector<int>& nums) {
-        temp.resize(nums.size());
+    vector<int> sortArray(vector<int>& nums) {
         mergeSort(nums, 0, nums.size() - 1);
         return nums;
+    }
+private:
+    void mergeSort(vector<int>& nums, int low, int high) {
+        if (low >= high) return;  
+
+        int mid = low + (high - low) / 2;
+        mergeSort(nums, low, mid);
+        mergeSort(nums, mid + 1, high);
+        merge(nums, low, mid, high);
+    }
+    void merge(vector<int>& nums, int low, int mid, int high) {
+        vector<int> temp(high - low + 1);
+        int i = low, j = mid + 1, k = 0;
+
+        while (i <= mid && j <= high)
+            temp[k++] = (nums[i] <= nums[j]) ? nums[i++] : nums[j++];
+        while (i <= mid) temp[k++] = nums[i++];
+        while (j <= high) temp[k++] = nums[j++];
+        for (int x = 0; x < temp.size(); x++)
+            nums[low + x] = temp[x];
     }
 };
