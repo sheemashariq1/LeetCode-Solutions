@@ -1,21 +1,19 @@
 class Solution {
 public:
- int majority(vector<int>& nums, vector<int>::iterator left, vector<int>::iterator right) {
-        if (next(left) == right) {
-            return *left;
+  int majority(vector<int>& nums, int l, int h) {
+        if (l == h) return nums[l];  // base case
+        int mid = l + (h - l) / 2;
+        int left = majority(nums, l, mid);
+        int right = majority(nums, mid + 1, h);
+        if (left == right) return left;
+        int leftCount = 0, rightCount = 0;
+        for (int i = l; i <= h; i++) {
+            if (nums[i] == left) leftCount++;
+            if (nums[i] == right) rightCount++;
         }
-        auto mid = left + distance(left, right) / 2;
-        int leftMajority = majority(nums, left, mid);
-        int rightMajority = majority(nums, mid, right);
-        if (leftMajority == rightMajority) {
-            return leftMajority;
-        }
-        int leftCount = count(left, right, leftMajority);
-        int rightCount = count(left, right, rightMajority);
-
-        return (leftCount > rightCount) ? leftMajority : rightMajority;
+        return leftCount > rightCount ? left : right;
     }
     int majorityElement(vector<int>& nums) {
-          return majority(nums, nums.begin(), nums.end());
+        return majority(nums, 0, nums.size() - 1);
     }
 };
