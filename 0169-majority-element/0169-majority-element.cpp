@@ -1,7 +1,7 @@
 class Solution {
 public:
   int majority(vector<int>& nums, int l, int h) {
-        if (l == h) return nums[l];  // base case
+        if (l == h) return nums[l]; 
         int mid = l + (h - l) / 2;
         int left = majority(nums, l, mid);
         int right = majority(nums, mid + 1, h);
