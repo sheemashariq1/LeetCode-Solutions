@@ -3,8 +3,6 @@ public:
     bool exist(vector<vector<char>>& board, string word) {
         int rows = board.size();
         int cols = board[0].size();
-        
-        // Search for the first letter of the word in the grid
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (board[i][j] == word[0] && backtrack(board, word, i, j, 0)) {
