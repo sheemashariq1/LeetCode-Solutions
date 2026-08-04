@@ -1,18 +1,14 @@
 class Solution {
 public:
     vector<int> findMissingElements(vector<int>& nums) {
-    int mn = nums[0], mx = nums[0];
-        unordered_set<int> st;
-        for (int x : nums) {
-            st.insert(x);
-            mn = min(mn, x);
-            mx = max(mx, x);
-        }
-        vector<int> result;
-
-        for (int i = mn; i <= mx; i++) {
-            if (!st.count(i))
-                result.push_back(i);
+     vector<int>result;
+        sort(nums.begin(),nums.end());
+        int start=nums[0];
+        int end=nums.back();
+        set<int>st(nums.begin(),nums.end());
+        for(int i=start+1;i<=end-1;i++){
+            if(st.count(i)==0)
+            result.push_back(i);
         }
         return result;
     }
