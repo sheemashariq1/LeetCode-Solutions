@@ -5,7 +5,7 @@ class Solution(object):
         for num in nums:
             if num in dupp:
                 return True
-            dupp.add(num)
-            
+            dupp.add(num) 
+        
         return False
         
