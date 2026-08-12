@@ -4,10 +4,10 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        seen = set()
+        dupp = set()
         for num in nums:
-            if num in seen:
+            if num in dupp:
                 return True
-            seen.add(num)
+            dupp.add(num)
         return False
         
