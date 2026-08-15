@@ -9,8 +9,6 @@ public:
         
         if (xr != 0)
             return nums.size();
-        
-        // Total XOR is 0
         for (int x : nums) {
             if (x != 0)
                 return nums.size() - 1;
