@@ -10,12 +10,6 @@ public:
             n=n/10;
         }
         int sum=sum_digits+prod_digits;
-        if(org%sum==0)
-    {
-        return true;
-    }
-        else{
-        return false;
-        }
+        return org%sum==0 ;
     }
 };
