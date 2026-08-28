@@ -16,6 +16,7 @@ This repo is automatically updated using **LeetHub v2** — every successful sub
   
 ## 🛠️ Languages Used
 - C++
+- C
 - Python
 - MySQL
 ## 🔗 Connect
