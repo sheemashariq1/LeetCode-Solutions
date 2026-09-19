@@ -5,9 +5,17 @@ class Solution(object):
         :type heights: List[int]
         :rtype: List[str]
         """
-        res = []
-        for h in sorted(heights, reverse=True):
-            i = heights.index(h)
-            res.append(names[i])
-        return res
+        
+        people = {}
+        for i in range(len(names)):
+            people[heights[i]] = names[i]
+        
+        res = sorted(people)
+        j = len(names) - 1      
+        sorted_list = []
+        while j >= 0 :
+            sorted_list.append(people[res[j]])
+            j -= 1
+
+        return sorted_list
         
