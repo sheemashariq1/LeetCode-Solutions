@@ -8,14 +8,12 @@ public:
                 if (open > 0) {
                     result += c;
                 }
-                open++;
-            } else { 
+                open++;} 
+                else { 
                 open--;
                 if (open > 0) {
                     result += c;
-                }
-            }
-        }
+                }}}
         return result;
     }
 };
