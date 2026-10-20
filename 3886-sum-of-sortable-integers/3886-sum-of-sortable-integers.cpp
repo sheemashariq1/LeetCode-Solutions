@@ -1,39 +1,56 @@
+
 class Solution {
 public:
-    bool check(vector<int>& nums, int k) {
-        int n = nums.size();
-        int prev_max = 0;
-        for (int l = 0; l < n; l += k) {
-            int block_min = nums[l];
-            int block_max = nums[l];
-            int drops = 0;
-            for (int j = 0; j < k; j++) {
-                int current = l + j;
-                int next = l + (j + 1) % k;
-                block_min = min(block_min, nums[current]);
-                block_max = max(block_max, nums[current]);
-                if (nums[current] > nums[next]) {
-                    drops++;
-                }
-            }
-            if (drops > 1 || prev_max > block_min) {
-                return false;
-            }
-            prev_max = block_max;
-        }
-        return true;
-    }
     int sortableIntegers(vector<int>& nums) {
         int n = nums.size();
+        vector<int> divisors;
+        for (int i = 1; i * i <= n; i++) {
+            if (n % i == 0) {
+                divisors.push_back(i);
+                if (i != n / i) {
+                    divisors.push_back(n / i);
+                }} }
         int res = 0;
-        for (int k = 1; k <= n; k++) {
-            if (n % k != 0) {
-                continue;
+        for (int k : divisors) {
+            bool ok = true;
+            int prevMax = 0;
+            for (int i = 0; i < n; i += k) {
+                int dec = 0;
+                int decIdx = -1;
+
+                // Count decreasing adjacent pairs
+                for (int j = 0; j < k - 1; j++) {
+                    if (nums[i + j] > nums[i + j + 1]) {
+                        dec++;
+                        decIdx = j;
+                    }
+                }
+                int blockMin, blockMax;
+                if (dec == 0) {
+                    blockMin = nums[i];
+                    blockMax = nums[i + k - 1];
+                }
+                else if (dec == 1) {
+                    // cyclic rotation sort
+                    if (nums[i + k - 1] > nums[i]) {
+                        ok = false;
+                        break;
+                    }
+
+                    blockMin = nums[i + decIdx + 1];
+                    blockMax = nums[i + decIdx];
+                }
+                else{
+                    ok = false;
+                    break;}
+                if (i > 0 && blockMin < prevMax) {
+                    ok = false;
+                    break;
+                }
+                prevMax = blockMax;
             }
-            if (check(nums, k)) {
-                res += k;
-            }
-        }
+            if (ok) {
+                res += k;}}
         return res;
     }
 };
