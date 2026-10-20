@@ -1,38 +1,59 @@
+
 class Solution {
 public:
     int sortableIntegers(vector<int>& nums) {
         int n = nums.size();
-        vector<int> lmax(n + 1, 0);
-        vector<int> rmin(n + 1, 100001);
-        vector<int> dec(n, 0);
-      
-        for (int i = 0; i < n; i++)
-            lmax[i + 1] = max(lmax[i], nums[i]);
-        for (int i = n - 1; i >= 0; i--)
-            rmin[i] = min(rmin[i + 1], nums[i]);
-        for (int i = 1; i < n; i++)
-            dec[i] = dec[i - 1] + (nums[i - 1] > nums[i]);
+        vector<int> divisors;
+
+        for (int i = 1; i * i <= n; i++) {
+            if (n % i == 0) {
+                divisors.push_back(i);
+
+                if (i * i != n)
+                    divisors.push_back(n / i);}
+        }
         int res = 0;
-        for (int k = 1; k <= n / k; k++) {
-            if (n % k != 0)
-            continue;
-            int other = n / k;
-            for (int t = 0; t < 2; t++) {
-                int len = (t == 0 ? k : other);
-                if (t == 1 && k == other)
-                continue;
-                bool ok = true;
-                for (int start = 0; start < n; start += len) {
-                    int end = start + len - 1;
-                    int count = dec[end] - dec[start];
-                    if (nums[end] > nums[start])
-                        count++;
-                    if (count > 1 || lmax[start] > rmin[start]) {
-                        ok = false;
-                        break;}
+
+        for (int k : divisors) {
+            bool ok = true;
+            int prevMax = -1;
+
+            for (int i = 0; i < n; i += k) {
+            int dec = 0;
+             int decIdx = -1;
+                for (int j = 0; j < k - 1; j++) {
+                    if (nums[i + j] > nums[i + j + 1]) {
+                    dec++;
+                    decIdx = j;
+                    }
                 }
-                if (ok)
-                    res += len;}}
+
+                int blockMin, blockMax;
+
+                if (dec == 0) {
+                    blockMin = nums[i];
+                    blockMax = nums[i + k - 1];
+                }
+                else if (dec == 1) {
+                    if (nums[i + k - 1] > nums[i]) {
+                        ok = false;
+                        break;
+                    }
+
+                    blockMin = nums[i + decIdx + 1];
+                    blockMax = nums[i + decIdx];
+                }
+                else {
+                    ok = false;
+                    break;
+                }
+                if (prevMax != -1 && blockMin < prevMax) {
+                    ok = false;
+                    break;
+                }
+                prevMax = blockMax;}
+            if (ok)
+                res += k; }
         return res;
     }
 };
