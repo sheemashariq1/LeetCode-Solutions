@@ -1,38 +1,71 @@
 class Solution {
 public:
-    int sortableIntegers(vector<int>& nums) {
+    int sortableIntegers(std::vector<int>& nums) {
         int n = nums.size();
-        vector<int> lmax(n + 1, 0);
-        vector<int> rmin(n + 1, 100001);
-        vector<int> dec(n, 0);
-      
-        for (int i = 0; i < n; i++)
-            lmax[i + 1] = max(lmax[i], nums[i]);
-        for (int i = n - 1; i >= 0; i--)
-            rmin[i] = min(rmin[i + 1], nums[i]);
-        for (int i = 1; i < n; i++)
-            dec[i] = dec[i - 1] + (nums[i - 1] > nums[i]);
-        int res = 0;
-        for (int k = 1; k <= n / k; k++) {
-            if (n % k != 0)
-            continue;
-            int other = n / k;
-            for (int t = 0; t < 2; t++) {
-                int len = (t == 0 ? k : other);
-                if (t == 1 && k == other)
-                continue;
-                bool ok = true;
-                for (int start = 0; start < n; start += len) {
-                    int end = start + len - 1;
-                    int count = dec[end] - dec[start];
-                    if (nums[end] > nums[start])
-                        count++;
-                    if (count > 1 || lmax[start] > rmin[start]) {
-                        ok = false;
-                        break;}
+        
+        // Find all divisors of n
+        std::vector<int> divisors;
+        for (int i = 1; i * i <= n; ++i) {
+            if (n % i == 0) {
+                divisors.push_back(i);
+                if (i * i != n) {
+                    divisors.push_back(n / i);
                 }
-                if (ok)
-                    res += len;}}
-        return res;
+            }
+        }
+
+        int total_sum = 0;
+
+        for (int k : divisors) {
+            bool valid = true;
+            int prev_max = -1; // Keep track of maximum element of the previous sorted block
+
+            for (int i = 0; i < n; i += k) {
+                // Check block nums[i ... i + k - 1]
+                int drops = 0;
+                int drop_idx = -1;
+
+                for (int j = 0; j < k - 1; ++j) {
+                    if (nums[i + j] > nums[i + j + 1]) {
+                        drops++;
+                        drop_idx = j;
+                    }
+                }
+
+                int block_min, block_max;
+
+                if (drops == 0) {
+                    block_min = nums[i];
+                    block_max = nums[i + k - 1];
+                } else if (drops == 1) {
+                    // Cyclic rotation is valid only if last element <= first element
+                    if (nums[i + k - 1] > nums[i]) {
+                        valid = false;
+                        break;
+                    }
+                    block_min = nums[i + drop_idx + 1];
+                    block_max = nums[i + drop_idx];
+                } else {
+                    // More than 1 drop cannot be sorted by rotation
+                    valid = false;
+                    break;
+                }
+
+                // Check condition between consecutive blocks
+                if (prev_max != -1 && block_min < prev_max) {
+                    valid = false;
+                    break;
+                }
+
+                prev_max = block_max;
+            }
+
+            if (valid) {
+                total_sum += k;
+            }
+        }
+
+        return total_sum;
     }
 };
+
