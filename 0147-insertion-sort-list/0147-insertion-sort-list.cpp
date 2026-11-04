@@ -12,21 +12,15 @@ class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
         ListNode* dummy = new ListNode(0);
-
-        while (head) {
-
-            ListNode* next = head->next;
+        ListNode* curr = head;
+        while (curr != NULL) {
+            ListNode* nextNode = curr->next;
             ListNode* temp = dummy;
-
-            while (temp->next && temp->next->val < head->val) {
-                temp = temp->next;
-            }
-
-            head->next = temp->next;
-            temp->next = head;
-
-            head = next;
-        }
+            while (temp->next != NULL && temp->next->val < curr->val) {
+             temp = temp->next;}
+        curr->next = temp->next;
+            temp->next = curr;
+            curr = nextNode;}
         return dummy->next;
     }
 };
