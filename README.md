@@ -19,6 +19,8 @@ This repo is automatically updated using **LeetHub v2** — every successful sub
 - C
 - Python
 - MySQL
+- Pandas
+
 ## 🔗 Connect
 - [LinkedIn](https://www.linkedin.com/in/sheema-shariq-436678366)
 - [LeetCode Profile](https://leetcode.com/u/SHEEMA_SHARIQ)
